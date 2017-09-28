@@ -3,19 +3,21 @@ Self-Driving Car Engineer Nanodegree Program
 
 ## Goal
 
-The goal is to test if a PID controller cand safely control a car on a track in a virtual environment. Both throttling and steering should be controlled.
+The goal is to test if a PID controller can safely control a car on a track in a virtual environment. Both throttling and steering should be controlled.
 
-A PID is very simple to implement and to understand. Given a reference and the error from the reference (how far the car is off the center of the road - cross track error), the PID has to control steering and maybe the throttling such as to keep on road.
+A PID is very simple to implement and to understand. Given a reference and the error from the reference (how far the car is off the center of the road - cross track error), the PID has to control steering and maybe the throttling such as to keep the car on the road.
 
 
-The PID challenge is to find the right coefficients that can safely avoid leaving the track, driving a safe velocitym and not too much overshooting.
+The PID challenge is to find the right coefficients that can safely avoid leaving the track, driving at a safe velocity, and not too much overshooting.
 
 The PID controller has 3 tunable parameters:
 
-* P (proportional parameter) - takes into account current error - offset from center of the track
-* I (Integral parameter) - all history of errors, corrects any bias from 0 reference controller. Takes into account the cumulative error in time
-* D (Derivative) - the rate of the error change. Takes into account how fast are we approaching the desired reference. Iv
+* **P (proportional parameter)** - takes into account current error - offset from center of the track
+* **I (Integral parameter)** - all history of errors, corrects any bias from 0 reference controller. Takes into account the cumulative error in time
+* **D (Derivative)** - the rate of the error change. Takes into account how fast are we approaching the desired reference. Iv
 
+## Project Video
+Here is my project video with PID in action on track:
 
 [![project video](screenshot.png)](https://www.youtube.com/watch?v=yfoitEZToYY)
 
@@ -25,29 +27,30 @@ _Cross track error_ is input error for the PID. It means how far off the center 
 
 _cte = reference_state - current_state_
 
-PID controller tries to minimize the input error, bu computing a correction, that is the sum of 3 types of quantities:
+PID controller tries to minimize the input error by computing a correction, that is the sum of 3 types of quantities:
 * current error
 * past error sum
 * error rate of change
 
-These quantities are combined in one value - PID repsonse - as a linear combination of these 3 quantities
+These quantities are combined in one value - PID response - as a linear combination of these 3 quantities
 
-
-In order to check the parameter influence, as stated above. we can switch off different PID components (make them 0). 
+In order to check the parameter influence, as stated above, we can switch off different PID components (make them 0). 
 
 Having only P controller, the car will steer continously and overshoot when reaching 0 error. 
 
 Having only PD controller limits by a certain ammount the overshooting of the car.
+
+I think I controller proved beneficial at bias errors, epsecially steering drift in shapr turns, at high speeds.
+
 
 I particularly found the PID controller easy to implement, but hard to tune.
 Especially tuning for throttling using one PID controller proved to be a real challenge.
 
 ## PID Tuning
 
-The PID coefficients were tuned manually. After tuning for steering, I used the same coefficents to found a correction for throttling. Lower speeds proved beneficial when tuning the coefficients.
+The PID coefficients were tuned manually. After tuning for steering, I used the same coefficients to apply a correction for throttling. Lower speeds proved beneficial when tuning the coefficients.
 
 I found that P is 10 times larger than I, and almost 100 times larger than D.
-
 
 
 
